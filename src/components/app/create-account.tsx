@@ -14,8 +14,10 @@ export function CreateAccount() {
     <Dialog>
       {/* Usa el Button como trigger para abrir el diálogo */}
       <DialogTrigger asChild>
-        <Button className="w-full bg-black hover:bg-neutral-800 text-white font-medium">
-          Create account
+        <Button 
+        className="w-full bg-black hover:bg-neutral-800 text-white font-medium"
+          disabled={true}>
+          Create Account
         </Button>
       </DialogTrigger>
       {/* Contenido del diálogo */}

@@ -1,7 +1,7 @@
 "use client";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@app/components/ui/avatar";
-import { Copy, MoreHorizontal } from 'lucide-react';
+import { Copy, MoreHorizontal } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuTrigger,
@@ -23,7 +23,7 @@ import { Logout } from "@app/components/actions/logout";
 import { useUser } from "@app/context/UserContext";
 import Link from "next/link";
 
-import { AtSign, LogOut } from 'lucide-react';
+import { AtSign, LogOut } from "lucide-react";
 import AccountSettings from "../account/settings";
 import { useState } from "react";
 import { useTheme } from "next-themes";
@@ -34,7 +34,6 @@ export default function SidebarAccount() {
   const { setTheme } = useTheme();
 
   const [darkThemeCheck, setDarkThemeCheck] = useState<Checked>(true);
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [showTheme, setShowTheme] = useState<"dark" | "light">("dark");
 
   const copyId = () => {
@@ -64,7 +63,10 @@ export default function SidebarAccount() {
                 <p className="text-xs text-gray-500">@{user?.username}</p>
               </div>
             </div>
-            <MoreHorizontal className="h-5 w-5 hidden md:block" strokeWidth={3} />
+            <MoreHorizontal
+              className="h-5 w-5 hidden md:block"
+              strokeWidth={3}
+            />
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">

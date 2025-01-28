@@ -1,17 +1,17 @@
-'use client'
+"use client";
+
 import { Button } from "@app/components/ui/button";
 import {
   Dialog,
   DialogContent,
   DialogDescription,
-  DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
 } from "@app/components/ui/dialog";
 import { useUser } from "@app/context/UserContext";
-
-import { ImageIcon, SendHorizontal, SmileIcon, X } from 'lucide-react';
+import Image from "next/image";
+import { ImageIcon, SendHorizontal, SmileIcon, X } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@app/components/ui/avatar";
 import { useRef, useState } from "react";
 import { Textarea } from "../ui/textarea";
@@ -30,10 +30,6 @@ import {
 import { CreatePost } from "../actions/create-post";
 import { DialogClose } from "@radix-ui/react-dialog";
 
-import dynamic from "next/dynamic";
-const MDEditor = dynamic(() => import("@uiw/react-md-editor"), { ssr: false });
-import rehypeSanitize from "rehype-sanitize";
-
 export default function SidebarPost() {
   const { user } = useUser();
   const [content, setContent] = useState("");
@@ -45,6 +41,10 @@ export default function SidebarPost() {
   const handleEmojiInput = (emoji: { native: string }) => {
     setContent((prevContent) => prevContent + emoji.native);
     setDisplayEmojiTab(false);
+  };
+
+  const handleContentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setContent(e.target.value);
   };
 
   return (
@@ -63,10 +63,13 @@ export default function SidebarPost() {
 
           <DialogContent className="sm:max-w-[500px]">
             <DialogHeader>
-              <DialogTitle className="text-2xl font-bold">Create a post</DialogTitle>
-              <DialogDescription>Share your thoughts with the world</DialogDescription>
+              <DialogTitle className="text-2xl font-bold">
+                Create a post
+              </DialogTitle>
+              <DialogDescription>
+                Tip: Markdown is supported
+              </DialogDescription>
             </DialogHeader>
-            <Separator className="my-4" />
             <form
               ref={FormRef}
               action={async (formData) => {
@@ -82,28 +85,33 @@ export default function SidebarPost() {
                     src={user?.avatar_url || ""}
                     alt={`${user?.username}'s avatar` || "Avatar"}
                   />
-                  <AvatarFallback>{user?.username?.slice(0, 2).toUpperCase()}</AvatarFallback>
+                  <AvatarFallback>
+                    {user?.username?.slice(0, 2).toUpperCase()}
+                  </AvatarFallback>
                 </Avatar>
                 <div className="flex-1 space-y-2">
                   <Label htmlFor="post-content" className="sr-only">
                     Your post
                   </Label>
-                  <MDEditor
-                    value={content}
-                    onChange={(value) => setContent(value || "")}
-                    height={200}
-                    textareaProps={{
-                      placeholder: "What's on your mind?",
-                      maxLength: 240,
-                    }}
-                    previewOptions={{
-                      rehypePlugins: [[rehypeSanitize]],
-                    }}
-                  />
-                  {attachment && (
+
+                  <div>
+                  <Textarea
+                  name="content"
+                  rows={4}
+                  value={content}
+                  onChange={handleContentChange}
+                  placeholder="What's on your mind?"
+                  maxLength={240}
+                  className="w-full"
+                />
+                {attachment && (
                     <div className="relative inline-block">
-                      <img
-                        src={attachment || "/placeholder.svg"}
+                                    <Separator className="my-4" />
+
+                      <Image
+                        src={attachment}
+                        width={400}
+                        height={400}
                         alt="Attached image"
                         className="max-w-full h-auto rounded-lg"
                       />
@@ -117,8 +125,12 @@ export default function SidebarPost() {
                       </Button>
                     </div>
                   )}
+                  </div>
+                  
                 </div>
               </div>
+              <Separator className="my-4" />
+
               <div className="flex justify-between items-center">
                 <div className="flex space-x-2">
                   <Tooltip>
@@ -126,7 +138,9 @@ export default function SidebarPost() {
                       <Button
                         variant="outline"
                         size="icon"
-                        onClick={() => document.getElementById("file-upload")?.click()}
+                        onClick={() =>
+                          document.getElementById("file-upload")?.click()
+                        }
                       >
                         <ImageIcon className="h-4 w-4" />
                       </Button>
@@ -142,7 +156,8 @@ export default function SidebarPost() {
                       const file = e.target.files?.[0];
                       if (file) {
                         const reader = new FileReader();
-                        reader.onload = (e) => setAttachment(e.target?.result as string);
+                        reader.onload = (e) =>
+                          setAttachment(e.target?.result as string);
                         reader.readAsDataURL(file);
                       }
                     }}
@@ -169,7 +184,12 @@ export default function SidebarPost() {
             </form>
             {displayEmojiTab && (
               <div className="absolute bottom-16 right-4 z-20">
-                <Picker data={data} onEmojiSelect={handleEmojiInput} theme="light" set="twitter" />
+                <Picker
+                  data={data}
+                  onEmojiSelect={handleEmojiInput}
+                  theme="light"
+                  set="twitter"
+                />
               </div>
             )}
           </DialogContent>

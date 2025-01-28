@@ -16,14 +16,9 @@ export default function AppLogin() {
       <header className="p-4 flex justify-between items-center">
         <div className="flex items-center gap-10">
           <Link href="/">
-          <Image
-          src="/favicon.webp"
-          alt="Favicon"
-          width={50}
-          height={50}
-          />
+            <Image src="/favicon.webp" alt="Favicon" width={50} height={50} />
           </Link>
-          </div>
+        </div>
         <div className="flex items-center gap-2">
           <Button variant="ghost" className="text-sm font-medium">
             Log in
@@ -86,11 +81,7 @@ export default function AppLogin() {
               <div className="flex-1 h-px bg-neutral-200" />
             </div>
 
-            <Button className="w-full bg-black hover:bg-neutral-800 text-white font-medium"
-            disabled={true}
-            >
               <CreateAccount />
-            </Button>
 
             <p className="text-xs text-neutral-500">
               By signing up, you agree to the{" "}

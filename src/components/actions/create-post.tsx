@@ -18,7 +18,7 @@ export async function CreatePost(
   };
 
   const db = await createClient();
-  
+
   await db.from("status").insert([statusData]);
   revalidatePath("/");
 }

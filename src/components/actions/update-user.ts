@@ -17,12 +17,12 @@ export async function updateUser({ username, name }: User) {
 
   try {
     await db
-    .from("users")
-    .update({
-      name: name,
-      username: username,
-    })
-    .eq("id", user.data.user?.id);
+      .from("users")
+      .update({
+        name: name,
+        username: username,
+      })
+      .eq("id", user.data.user?.id);
     revalidatePath("/home");
   } finally {
     revalidatePath("/home");

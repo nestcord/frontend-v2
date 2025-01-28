@@ -29,6 +29,7 @@ export default function RootLayout({
     id: null,
     name: null,
     username: null,
+    avatar_url: null,
   };
   return (
     <html lang="en" suppressHydrationWarning>

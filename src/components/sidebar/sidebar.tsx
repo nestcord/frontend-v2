@@ -2,7 +2,7 @@ import SidebarAccount from "@app/components/sidebar/sidebar-account";
 import SidebarButton from "@app/components/sidebar/sidebar-button";
 import SidebarPost from "@app/components/sidebar/sidebar-post";
 
-import { HomeIcon as House, Search, Bell, Send } from 'lucide-react';
+import { HomeIcon as House, Search, Bell, Send } from "lucide-react";
 
 export type NavLink = {
   href: string;
